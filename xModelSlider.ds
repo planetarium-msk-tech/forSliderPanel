@@ -1,0 +1,38 @@
+﻿# {[6.21.03]}
+# Demonstrate how to create and play a slideset by setting the slideset path to a directory.  In this example, the slideset is applied to the image.x model.  
+            
+            
+0	#mySlides is slidesetClass
+	#ssDir path $Content\Shows\Tests\test120722\Planetary_jpg
+
+	image is $content\Library\models\misc\image.x
+	scene add image
+	image position spherical 0 30 15
+	image face eye
+
++2	image modelTexture 0 mySlides
+
+	# Text shows number of current frame
++1	mytext1 is text2Class
+	mytext1 text "Current frame {0}"
+	mytext1 parameter 0 mySlides frame
+	mytext1 attitude cartesian 180 0 0
+	mytext1 position spherical -45 0 15 m
+	mytext1 color 100 42 0
+
+	scene add mytext1 landscape
+	
+	# text shows current frame path
+	# should be changed manualy
+	mytext2 is text2Class
+	mytext2 text ""
+	
+	mytext2 attitude cartesian 180 0 0
+	mytext2 position spherical -15 0 15 m
+	mytext2 color 100 42 0
+
+	scene add mytext2 landscape
+	js play $Content/Shows/Tests/GetFramePath.js
+
+
++1	script end

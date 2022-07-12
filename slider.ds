@@ -1,0 +1,77 @@
+﻿# {[6.21.03]}
+# Digistar Script 
+# Created: 2/8/2022
+
+# Script to show full dome images with chroma key
+
+# NOTE
+# mySlides next - CHANGE SLIDE
+# mySlides frame NUMBER - change to NUMBER frame
+# js stop "GetFramePath" - STOP JS SCRIPT
+
+
++0	
+
++1	eye color black duration 1
+				
+	# load images
+	# Change path to folder to show slides
+	# In command console wtite 'mySlides next', 'mySlides previous', 'mySlides frame *frame number*'
+	mySlides is slidesetClass
+	mySlides path $Content/Shows/Tests/test120722/Planetary_jpg
+	mySlides loadAllFrames on
+	mySlides stop
+	
+	# Solid model
+	slidesModel is solidModelClass
+	slidesModel model $Content/Library/Models/Misc/image_hemisphere.x
+	#slidesModel model $Content\Library\Models\Misc\image.x
+	slidesModel modelTexture 0 mySlides
+	slidesModel intensity 0
+	scene add slidesModel fixed
+	
+	#slidesModel chromaKey on
+	#slidesModel chromaKeyMinRange 100
+	
+	# Text shows number of current frame
+	mytext1 is text2Class
+	mytext1 text "Current frame {0}"
+	mytext1 parameter 0 mySlides frame
+	mytext1 attitude cartesian 180 0 0
+	mytext1 position spherical -45 0 15 m
+	mytext1 color 100 42 0
+	mytext1 intensity 0
+	scene add mytext1 landscape
+	
+	# text shows current frame path
+	# should be changed manualy
+	mytext2 is text2Class
+	mytext2 text ""
+	
+	mytext2 parameter 0 mySlides list 0
+	mytext2 attitude cartesian 180 0 0
+	mytext2 position spherical -15 0 15 m
+	mytext2 color 100 42 0
+	mytext2 intensity 0
+	scene add mytext2 landscape
+	
+	#scene setup
+	slidesModel turnto position 0 0 0
+	
+	#show slides
++3	slidesModel intensity 100 duration 2
+	mytext1 intensity 100 duration 2
+	mytext2 intensity 100 duration 2
+	eye color white duration 2
+	
++1	js play $Content/Shows/Tests/GetFramePath.js | changeMessage('mySlides', 'mytext2')
+	
++5	js play $Content/Shows/Tests/GetFramePath.js
+
++300 	js stop "GetFramePath"
+	script end
+
+
+
+
+	
